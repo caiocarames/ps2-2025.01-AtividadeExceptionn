@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 import br.dev.joaquim.bank.BankAccount;
+import br.dev.joaquim.exceptions.InsufficientFundsException;
+
 
 public class UserInterface {
     private Scanner input = new Scanner(System.in);
@@ -11,7 +13,7 @@ public class UserInterface {
 
     private void welcome() {
         System.out.println("Bem-vindo ao sistema bancário");
-        System.out.print("Vamos criar usa conta, informe seu nome: ");
+        System.out.print("Vamos criar sua conta, informe seu nome: ");
         String holderName = input.nextLine();
         int accountNumber = 1000 + (new Random()).nextInt(8999);
         System.out.println("Criamos uma conta com o número: " + accountNumber + ", com saldo igual a 0 (zero).");
@@ -45,7 +47,7 @@ public class UserInterface {
                         deposit();
                         break;
                     case 3:
-                        withdraw(); // pode dar problema
+                        withdraw(); // Agora a exceção será tratada corretamente
                         break;
                     case 4:
                         System.out.println("Até a próxima.");
@@ -65,15 +67,20 @@ public class UserInterface {
         System.out.print("\nInforme o valor a ser depositado: ");
         double value = readValue();
         account.deposit(value);
-        System.out.println("Desposito realizado com sucesso.");
+        System.out.println("Depósito realizado com sucesso.");
     }
 
     private void withdraw() {
         System.out.print("\nInforme o valor a ser sacado: ");
         double value = readValue();
-        account.withdraw(value); // pode dar problema
-        System.out.println("Saque realizado com sucesso");
+        try {
+            account.withdraw(value);
+            System.out.println("Saque realizado com sucesso.");
+        } catch (InsufficientFundsException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
     }
+    
 
     private int readOption() {
         String choiceString = input.nextLine();
@@ -86,7 +93,7 @@ public class UserInterface {
     }
 
     private void waitUser() {
-        System.out.println("pressione ENTER para continuar...");
+        System.out.println("Pressione ENTER para continuar...");
         input.nextLine();
     }
 }
