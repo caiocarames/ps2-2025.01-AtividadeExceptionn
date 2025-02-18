@@ -2,15 +2,19 @@ package br.dev.joaquim;
 
 import java.util.Random;
 import java.util.Scanner;
-
 import br.dev.joaquim.bank.BankAccount;
 import br.dev.joaquim.exceptions.InsufficientFundsException;
 
-
+/**
+ * Interface de usuário para interação com o sistema.
+ */
 public class UserInterface {
     private Scanner input = new Scanner(System.in);
     private BankAccount account;
 
+    /**
+     * Apresenta a tela de inicial e cria uma conta bancária.
+     */
     private void welcome() {
         System.out.println("Bem-vindo ao sistema bancário");
         System.out.print("Vamos criar sua conta, informe seu nome: ");
@@ -20,6 +24,9 @@ public class UserInterface {
         this.account = new BankAccount(accountNumber, 0, holderName);
     }
 
+    /**
+     * Exibe o menu de opções para o usuário.
+     */
     private void showMenu() {
         System.out.println("\n\n-----------------------");
         System.out.println("Escolha uma das opções:");
@@ -30,6 +37,9 @@ public class UserInterface {
         System.out.print("opção > ");
     }
 
+    /**
+     * Inicia a interface.
+     */
     public void start() {
         welcome();
         if (account == null)
@@ -47,7 +57,7 @@ public class UserInterface {
                         deposit();
                         break;
                     case 3:
-                        withdraw(); // Corrigido
+                        withdraw();
                         break;
                     case 4:
                         System.out.println("Até a próxima.");
@@ -63,6 +73,9 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Realiza um depósito na conta bancária.
+     */
     private void deposit() {
         System.out.print("\nInforme o valor a ser depositado: ");
         double value = readValue();
@@ -70,6 +83,9 @@ public class UserInterface {
         System.out.println("Depósito realizado com sucesso.");
     }
 
+    /**
+     * Realiza um saque na conta bancária.
+     */
     private void withdraw() {
         System.out.print("\nInforme o valor a ser sacado: ");
         double value = readValue();
@@ -80,7 +96,6 @@ public class UserInterface {
             System.out.println("Erro: " + e.getMessage());
         }
     }
-    
 
     private int readOption() {
         String choiceString = input.nextLine();
