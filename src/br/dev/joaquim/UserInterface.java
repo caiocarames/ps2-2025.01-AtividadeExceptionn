@@ -47,7 +47,7 @@ public class UserInterface {
                         deposit();
                         break;
                     case 3:
-                        withdraw(); // Agora a exceção será tratada corretamente
+                        withdraw(); // Corrigido
                         break;
                     case 4:
                         System.out.println("Até a próxima.");
